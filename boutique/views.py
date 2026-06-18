@@ -30,6 +30,9 @@ def reviews(request):
 
 def contact(request):
     return render(request, 'contact.html')
+from django.core.mail import send_mail, get_connection
+from django.conf import settings
+from .models import Appointment
 
 def appointment(request):
 
@@ -56,6 +59,15 @@ def appointment(request):
         )
 
         print("EMAIL PASSWORD EXISTS:", bool(settings.EMAIL_HOST_PASSWORD))
+
+        try:
+            connection = get_connection()
+            connection.open()
+            print("SMTP CONNECTED SUCCESSFULLY")
+        except Exception as e:
+            print("SMTP CONNECTION ERROR:", repr(e))
+
+        # Email to Admin
         try:
             send_mail(
                 subject='New Appointment Request',
@@ -85,7 +97,7 @@ Additional Notes
             print("ADMIN EMAIL SENT")
 
         except Exception as e:
-            print("ADMIN EMAIL ERROR:", e)
+            print("ADMIN EMAIL ERROR:", repr(e))
 
         # Email to Customer
         try:
@@ -114,7 +126,7 @@ Sukhmani Designer
             print("CUSTOMER EMAIL SENT")
 
         except Exception as e:
-            print("CUSTOMER EMAIL ERROR:", e)
+            print("CUSTOMER EMAIL ERROR:", repr(e))
 
         success = True
 
