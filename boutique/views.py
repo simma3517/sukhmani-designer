@@ -55,7 +55,7 @@ def appointment(request):
             notes=notes
         )
 
-        # Email to Admin
+        print("EMAIL PASSWORD EXISTS:", bool(settings.EMAIL_HOST_PASSWORD))
         try:
             send_mail(
                 subject='New Appointment Request',
