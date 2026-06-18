@@ -56,9 +56,10 @@ def appointment(request):
         )
 
         # Email to Admin
-        send_mail(
-            subject='New Appointment Request',
-            message=f'''
+        try:
+            send_mail(
+                subject='New Appointment Request',
+                message=f'''
 NEW APPOINTMENT BOOKING
 
 Customer Details
@@ -76,42 +77,44 @@ Time: {appointment_time}
 Additional Notes
 ----------------
 {notes}
-
-Please contact the customer to confirm the appointment.
 ''',
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=['itzsukhmanidesigner@gmail.com'],
-            fail_silently=False,
-        )
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['itzsukhmanidesigner@gmail.com'],
+                fail_silently=False,
+            )
+            print("ADMIN EMAIL SENT")
+
+        except Exception as e:
+            print("ADMIN EMAIL ERROR:", e)
 
         # Email to Customer
-        send_mail(
-            subject='Appointment Request Received - Sukhmani Designer',
-            message=f'''
+        try:
+            send_mail(
+                subject='Appointment Request Received - Sukhmani Designer',
+                message=f'''
 Dear {name},
 
 Thank you for choosing Sukhmani Designer.
 
 Your appointment request has been received successfully.
 
-Appointment Summary
--------------------
 Service: {service}
 Date: {appointment_date}
 Time: {appointment_time}
 
-Our team will review your request and contact you shortly to confirm your consultation.
+Our team will contact you shortly.
 
-We look forward to creating something beautiful for you.
-
-Warm Regards,
+Regards,
 Sukhmani Designer
-Punjab, India
 ''',
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[email],
-            fail_silently=False,
-        )
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+            print("CUSTOMER EMAIL SENT")
+
+        except Exception as e:
+            print("CUSTOMER EMAIL ERROR:", e)
 
         success = True
 
