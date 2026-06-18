@@ -1,0 +1,160 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="gallery-hero">
+    <div class="container text-center">
+        <p class="section-label">Our Gallery</p>
+
+        <h1 class="gallery-title">
+            Crafted With Elegance
+        </h1>
+
+        <p class="gallery-subtitle">
+            Explore our latest bridal creations, Punjabi suits,
+            party wear collections and custom-designed outfits.
+        </p>
+    </div>
+</section>
+
+<section class="gallery-section">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/H1.jpeg' %}" alt="Bridal Wear">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/r33.png' %}" alt="Bridal Wear">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/r7.png' %}" alt="Bridal Wear">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/g2.png' %}" alt="Punjabi Suit">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/g9.png' %}" alt="Punjabi Suit">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/g10.png' %}" alt="Party Wear">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/t9.png' %}" alt="Party Wear">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/t2.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y1.png' %}" alt="Custom Design">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y2.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/t33.png' %}" alt="Custom Design">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y3.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y4.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y5.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y6.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y7.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y8.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="gallery-card">
+                    <img src="{% static 'images/y9.png' %}" alt="Custom Design">
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+<section class="gallery-cta">
+    <div class="container text-center">
+
+        <h2>Love What You See?</h2>
+
+        <p>
+            Book a consultation and let us create something unique for you.
+        </p>
+
+        <a href="/appointment/" class="btn btn-book-consultation">
+            Book Appointment
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/collections.css' %}">
+{% endblock %}
+{% block content %}
+
+<!-- COLLECTION HERO -->
+<section class="collections-hero">
+    <div class="container text-center">
+        <p class="section-label">Our Collections</p>
+
+        <h1 class="collections-title">
+            Designed For Every Occasion
+        </h1>
+
+        <p class="collections-subtitle">
+            Discover handcrafted bridal wear, Punjabi suits,
+            party wear and custom creations tailored to perfection.
+        </p>
+    </div>
+</section>
+
+<!-- COLLECTION GRID -->
+<section class="collections-grid-section">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- Bridal -->
+            <div class="col-lg-6">
+                <div class="collection-card-page">
+                    <img src="{% static 'images/y11.png' %}" alt="">
+                    <div class="collection-overlay">
+                        <span>Luxury Collection</span>
+                        <h3>Bridal Wear</h3>
+                        <p>
+                            Elegant bridal outfits crafted for your special day.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Punjabi Suits -->
+            <div class="col-lg-6">
+                <div class="collection-card-page">
+                    <img src="{% static 'images/l1.jpeg' %}" alt="">
+                    <div class="collection-overlay">
+                        <span>Traditional Collection</span>
+                        <h3>Punjabi Suits</h3>
+                        <p>
+                            Classic and modern Punjabi suit designs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Party Wear -->
+            <div class="col-lg-6">
+                <div class="collection-card-page">
+                    <img src="{% static 'images/z1.png' %}" alt="">
+                    <div class="collection-overlay">
+                        <span>Celebration Collection</span>
+                        <h3>Party Wear</h3>
+                        <p>
+                            Sophisticated outfits for every celebration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Designs -->
+            <div class="col-lg-6">
+                <div class="collection-card-page">
+                    <img src="{% static 'images/n1.png' %}" alt="">
+                    <div class="collection-overlay">
+                        <span>Signature Collection</span>
+                        <h3>Custom Designs</h3>
+                        <p>
+                            Personalized creations designed exclusively for you.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="collections-cta">
+    <div class="container text-center">
+
+        <h2>Looking For A Custom Design?</h2>
+
+        <p>
+            Book a consultation and bring your dream outfit to life.
+        </p>
+
+        <a href="/appointment/" class="btn btn-book-consultation">
+            Book Consultation
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}

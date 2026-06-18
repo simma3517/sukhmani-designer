@@ -1,0 +1,125 @@
+
+
+/* CONTACT HERO */
+.contact-hero{
+    background: var(--ivory-dark);
+    padding: 120px 0 80px;
+}
+
+.contact-title{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem,5vw,4.8rem);
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+}
+
+.contact-subtitle{
+    max-width: 700px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+/* CONTACT SECTION */
+.contact-section{
+    padding: 90px 0;
+    background: var(--ivory);
+}
+
+.contact-card,
+.contact-cta-card{
+    background: #fff;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.06);
+    height: 100%;
+}
+
+.contact-card h3,
+.contact-cta-card h2{
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--charcoal);
+    margin-bottom: 2rem;
+}
+
+.contact-item{
+    margin-bottom: 1.5rem;
+}
+
+.contact-item strong{
+    display: block;
+    color: var(--gold);
+    margin-bottom: .4rem;
+    letter-spacing: 1px;
+}
+
+.contact-item p{
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.contact-cta-card p{
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.btn-book-consultation,
+.btn-whatsapp-contact{
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    transition: .3s ease;
+}
+
+.btn-book-consultation{
+    background: var(--gold);
+    color: var(--charcoal);
+}
+
+.btn-book-consultation:hover{
+    background: var(--charcoal);
+    color: var(--gold);
+}
+
+.btn-whatsapp-contact{
+    background: #25D366;
+    color: white;
+}
+
+.btn-whatsapp-contact:hover{
+    opacity: .9;
+    color: white;
+}
+
+/* MAP */
+.map-section{
+    background: #fff;
+}
+
+.map-section iframe{
+    display: block;
+}
+
+/* MOBILE */
+@media (max-width: 768px){
+
+    .contact-hero{
+        padding: 100px 0 60px;
+    }
+
+    .contact-card,
+    .contact-cta-card{
+        padding: 2rem;
+    }
+
+    .contact-title{
+        font-size: 2.6rem;
+    }
+}

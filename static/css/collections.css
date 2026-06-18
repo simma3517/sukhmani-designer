@@ -1,0 +1,145 @@
+
+/* COLLECTION PAGE */
+
+.collections-hero{
+    background: var(--ivory-dark);
+    padding: 120px 0 80px;
+}
+
+.collections-title{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem,5vw,4.5rem);
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+}
+
+.collections-subtitle{
+    max-width: 700px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.collections-grid-section{
+    padding: 80px 0;
+    background: var(--ivory);
+}
+
+/* COLLECTION CARDS */
+
+.collection-card-page{
+    position: relative;
+    overflow: hidden;
+    height: 700px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.collection-card-page img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: 0.6s ease;
+}
+
+/* Individual image positioning */
+.bridal-img{
+    object-position: center top;
+}
+
+.punjabi-img{
+    object-position: center 20%;
+}
+
+.collection-card-page:hover img{
+    transform: scale(1.05);
+}
+
+.collection-overlay{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 2rem;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.88),
+        rgba(0,0,0,0.15)
+    );
+}
+
+.collection-overlay span{
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .75rem;
+}
+
+.collection-overlay h3{
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    margin-top: .5rem;
+}
+
+.collection-overlay p{
+    color: rgba(255,255,255,.85);
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+/* CTA SECTION */
+
+.collections-cta{
+    background: var(--gold-pale);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.collections-cta h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--charcoal);
+}
+
+.collections-cta p{
+    color: var(--muted);
+    margin: 1rem 0 2rem;
+}
+
+.btn-book-consultation{
+    background: var(--gold);
+    color: var(--charcoal);
+    padding: 14px 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-book-consultation:hover{
+    background: var(--charcoal);
+    color: var(--gold);
+}
+
+/* MOBILE */
+
+@media (max-width: 768px){
+
+    .collection-card-page{
+        height: 500px;
+    }
+
+    .collections-title{
+        font-size: 2.5rem;
+    }
+
+    .collections-cta h2{
+        font-size: 2.2rem;
+    }
+}

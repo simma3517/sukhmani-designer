@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/appointment.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% if success %}
+<div class="container mt-4">
+    <div class="alert alert-success mb-4">
+        <strong>✓ Appointment Booked Successfully!</strong>
+        <br>
+        We have received your appointment request and will contact you shortly.
+    </div>
+</div>
+{% endif %}
+
+<section class="appointment-hero">
+    <div class="container text-center">
+        <h1>Book A Consultation</h1>
+        <p>
+            Schedule a personalized consultation with Sukhmani Designer and let us create something beautiful for your special occasion.
+        </p>
+    </div>
+</section>
+
+<section class="appointment-section">
+    <div class="container">
+
+        <div class="row g-5">
+
+            <div class="col-lg-4">
+
+                <div class="appointment-info">
+
+                    <h3>Your Consultation Includes</h3>
+
+                    <ul>
+                        <li>✓ Design Discussion</li>
+                        <li>✓ Fabric Selection Guidance</li>
+                        <li>✓ Measurement Session</li>
+                        <li>✓ Styling Recommendations</li>
+                    </ul>
+
+                    <hr>
+
+                    <h5>Consultation Duration</h5>
+                    <p>30 – 45 Minutes</p>
+
+                    <hr>
+
+                    <h5>Business Hours</h5>
+                    <p>
+                        Monday – Saturday<br>
+                        10:00 AM – 7:00 PM
+                    </p>
+
+                    <div class="whatsapp-box">
+                        <h5>Need Immediate Assistance?</h5>
+                        <a href="https://wa.me/919878776028?text=Hello%20Sukhmani%20Designer,%20I%20would%20like%20to%20book%20a%20consultation."
+                           target="_blank">
+                            Chat With Us On WhatsApp
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-8">
+
+                <form method="POST" id="appointmentForm" class="appointment-form">
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="tel" name="phone" class="form-control" placeholder="Enter your mobile number" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Preferred Date</label>
+                            <input type="date" name="appointment_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Preferred Time</label>
+                            <input type="time" name="appointment_time" class="form-control" required>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Service Required</label>
+                            <select name="service" class="form-control" required>
+                                <option selected disabled>Select Service</option>
+                                <option>Bridal Consultation</option>
+                                <option>Punjabi Suit Design</option>
+                                <option>Party Wear Styling</option>
+                                <option>Custom Tailoring</option>
+                                <option>Measurement Appointment</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mb-4">
+                            <label class="form-label">Additional Requirements</label>
+                            <textarea name="notes" rows="5" class="form-control" placeholder="Tell us about your requirements, preferred colors, occasion, measurements, etc."></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-appointment">
+                                Book Appointment
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

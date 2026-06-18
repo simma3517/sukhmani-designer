@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="reviews-page">
+
+    <!-- ── HERO ── -->
+    <header class="reviews-hero">
+        <span class="hero-tag">Client Testimonials</span>
+        <h1>Experiences That <em>Inspire</em></h1>
+        <p>Discover how Sukhmani Designer has helped clients celebrate their most memorable moments with elegance.</p>
+    </header>
+
+    <!-- ── TESTIMONIAL CARDS ── -->
+    <section class="reviews-grid" aria-label="Testimonials">
+        {% for review in reviews %}
+        <article class="testimonial-card {% if forloop.counter == 2 %}testimonial-card--featured{% endif %}">
+            <div class="card-top">
+                <div class="review-stars" aria-label="{{ review.rating }} out of 5 stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                    {% endfor %}
+                </div>
+                <span class="quote-mark">&ldquo;</span>
+            </div>
+            <p>{{ review.review }}</p>
+            <footer class="card-footer">
+                <h4>{{ review.name }}</h4>
+                <span>Verified Client</span>
+            </footer>
+        </article>
+        {% empty %}
+        <!-- Fallback static cards if no DB reviews yet -->
+        <article class="testimonial-card">
+            <div class="card-top">
+                <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <span class="quote-mark">&ldquo;</span>
+            </div>
+            <p>Beautiful craftsmanship and a perfect fitting. Every detail was exactly how I imagined it — I felt stunning on my special day.</p>
+            <footer class="card-footer">
+                <h4>Harpreet Kaur</h4>
+                <span>Verified Client</span>
+            </footer>
+        </article>
+
+        <article class="testimonial-card testimonial-card--featured">
+            <div class="card-top">
+                <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <span class="quote-mark">&ldquo;</span>
+            </div>
+            <p>Outstanding attention to detail and excellent customer service throughout the entire process. The team truly understood my vision.</p>
+            <footer class="card-footer">
+                <h4>Jasleen Kaur</h4>
+                <span>Verified Client</span>
+            </footer>
+        </article>
+
+        <article class="testimonial-card">
+            <div class="card-top">
+                <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <span class="quote-mark">&ldquo;</span>
+            </div>
+            <p>Exceptional quality and finishing. I've worn many custom outfits before, but the work here is truly in a class of its own.</p>
+            <footer class="card-footer">
+                <h4>Simran Kaur</h4>
+                <span>Verified Client</span>
+            </footer>
+        </article>
+        {% endfor %}
+    </section>
+
+    <!-- ── REVIEW FORM ── -->
+    <section class="review-form-section">
+        <div class="form-intro">
+            <span class="form-tag">Leave a Review</span>
+            <h2>Share Your <em>Experience</em></h2>
+            <p>We'd love to hear your thoughts. Your feedback helps us grow and inspires future clients.</p>
+        </div>
+
+        <div class="review-form-box">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+
+                <div class="field-group">
+                    <label for="client-name">Your Name</label>
+                    <input type="text" id="client-name" name="name" placeholder="e.g. Gurpreet Kaur" required>
+                </div>
+
+                <div class="field-group">
+                    <label>Your Rating</label>
+                    <div class="rating" role="group" aria-label="Star rating">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5" aria-label="5 stars"></label>
+
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" aria-label="4 stars"></label>
+
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" aria-label="3 stars"></label>
+
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" aria-label="2 stars"></label>
+
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" aria-label="1 star"></label>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="review-text">Your Experience</label>
+                    <textarea id="review-text" rows="5" name="review" placeholder="Tell us about your outfit, the fitting process, or anything else…" required></textarea>
+                </div>
+
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </section>
+
+</main>
+
+{% endblock %}
