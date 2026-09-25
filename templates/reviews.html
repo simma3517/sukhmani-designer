@@ -18,26 +18,19 @@
         <p>Discover how Sukhmani Designer has helped clients celebrate their most memorable moments with elegance.</p>
     </header>
 
+    {% if messages %}
+    <div style="max-width: 700px; margin: 0 auto 30px;">
+        {% for message in messages %}
+        <div class="alert alert-success text-center" style="border-radius: 12px; background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; padding: 1rem 1.5rem; font-weight: 500;">
+            ✓ {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- ── TESTIMONIAL CARDS ── -->
     <section class="reviews-grid" aria-label="Testimonials">
-        {% for review in reviews %}
-        <article class="testimonial-card {% if forloop.counter == 2 %}testimonial-card--featured{% endif %}">
-            <div class="card-top">
-                <div class="review-stars" aria-label="{{ review.rating }} out of 5 stars">
-                    {% for i in "12345" %}
-                        {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
-                    {% endfor %}
-                </div>
-                <span class="quote-mark">&ldquo;</span>
-            </div>
-            <p>{{ review.review }}</p>
-            <footer class="card-footer">
-                <h4>{{ review.name }}</h4>
-                <span>Verified Client</span>
-            </footer>
-        </article>
-        {% empty %}
-        <!-- Fallback static cards if no DB reviews yet -->
+        <!-- Top 3 Featured / Initial Reviews -->
         <article class="testimonial-card">
             <div class="card-top">
                 <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -73,8 +66,35 @@
                 <span>Verified Client</span>
             </footer>
         </article>
+
+        <!-- User Submitted Reviews (Initially Hidden, Toggleable) -->
+        {% for review in reviews %}
+        <article class="testimonial-card extra-review">
+            <div class="card-top">
+                <div class="review-stars" aria-label="{{ review.rating }} out of 5 stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                    {% endfor %}
+                </div>
+                <span class="quote-mark">&ldquo;</span>
+            </div>
+            <p>{{ review.review }}</p>
+            <footer class="card-footer">
+                <h4>{{ review.name|default:"Valued Client" }}</h4>
+                <span>Verified Client</span>
+            </footer>
+        </article>
         {% endfor %}
     </section>
+
+    {% if reviews %}
+    <div class="reviews-toggle-wrap">
+        <button type="button" id="toggle-reviews-btn" class="toggle-reviews-btn">
+            <span>View More Reviews ({{ reviews|length }})</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+    </div>
+    {% endif %}
 
     <!-- ── REVIEW FORM ── -->
     <section class="review-form-section">
@@ -125,4 +145,35 @@
 
 </main>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('toggle-reviews-btn');
+    if (!toggleBtn) return;
+
+    const extraReviews = document.querySelectorAll('.extra-review');
+    const totalExtra = extraReviews.length;
+    let isExpanded = false;
+
+    toggleBtn.addEventListener('click', function() {
+        isExpanded = !isExpanded;
+        extraReviews.forEach(function(card) {
+            if (isExpanded) {
+                card.classList.add('show');
+            } else {
+                card.classList.remove('show');
+            }
+        });
+
+        if (isExpanded) {
+            toggleBtn.innerHTML = '<span>View Less</span> <svg style="transform: rotate(180deg);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+        } else {
+            toggleBtn.innerHTML = '<span>View More Reviews (' + totalExtra + ')</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+            const grid = document.querySelector('.reviews-grid');
+            if (grid) {
+                grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

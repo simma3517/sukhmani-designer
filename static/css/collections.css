@@ -120,6 +120,8 @@
     font-weight: 600;
     border: none;
     transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .btn-book-consultation:hover{

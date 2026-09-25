@@ -19,13 +19,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+import os
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_oc+-)d1)u*!)w6%!q5@kx$(1z2nxhdy2n=5zf(6*4z9+h!&6r'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-_oc+-)d1)u*!)w6%!q5@kx$(1z2nxhdy2n=5zf(6*4z9+h!&6r')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1')
 
-ALLOWED_HOSTS = ["sukhmani-designer.onrender.com"]
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'sukhmani-designer.onrender.com',
+] + [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
 
 
 # Application definition
@@ -143,6 +149,10 @@ EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
 
 EMAIL_HOST_USER = 'af3bbc001@smtp-brevo.com'
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-
 DEFAULT_FROM_EMAIL = 'itzsukhmanidesigner@gmail.com'
+
+# WhatsApp API Settings
+WHATSAPP_API_TOKEN = os.environ.get('WHATSAPP_API_TOKEN', 'EAAgxs3StjfYBSkZCgDrneZAzzFUFczJOv0D22WTTYffspY0axZBH2klGkuL5E2J25qZB6PzZBhKUXeawe9MZAm6ToA953bdu4yFM5E1lq9kvYXEbMYTU0WPUeRgiRMXOjIWCQZBTP7TJ5xIgtMPR2H4mBunZCWjGQoLqqN7DsFdy0yMT2nEDkXHmaL0HrS97UeZCwTGqnYpJ5eCY0gzAz785Iu1hsrmDZAVJfaC8nq0K7E5QnsCnXfS54SRVSiRJ4nQLo3rhcz4HJqWKiqbPE90WoZChgZDZD')
+WHATSAPP_PHONE_NUMBER_ID = os.environ.get('WHATSAPP_PHONE_NUMBER_ID', '1412459251939993')
+WHATSAPP_DESIGNER_PHONE = os.environ.get('WHATSAPP_DESIGNER_PHONE', '918284099286')
+CALLMEBOT_API_KEY = os.environ.get('CALLMEBOT_API_KEY', '')

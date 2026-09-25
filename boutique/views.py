@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Appointment
-from django.core.mail import send_mail
+from django.core.mail import send_mail, get_connection
 from django.conf import settings
+from django.contrib import messages
+from .models import Appointment, Review
+from .whatsapp import send_whatsapp_alert, send_whatsapp_message
+
 def home(request):
     return render(request, 'home.html')
-
 
 def collections(request):
     return render(request, 'collections.html')
@@ -12,27 +14,33 @@ def collections(request):
 def gallery(request):
     return render(request, 'gallery.html')
 
-
-from .models import Review
-
 def reviews(request):
     if request.method == 'POST':
-        Review.objects.create(
-            name=request.POST.get('name'),
-            rating=request.POST.get('rating'),
-            review=request.POST.get('review'),
-            is_approved=False  # always pending by default
-        )
-    all_reviews = Review.objects.filter(is_approved=True).order_by('-created_at')
+        name = request.POST.get('name', '').strip()
+        rating_raw = request.POST.get('rating', '5')
+        review_text = request.POST.get('review', '').strip()
+        try:
+            rating = int(rating_raw)
+            if rating < 1 or rating > 5:
+                rating = 5
+        except (ValueError, TypeError):
+            rating = 5
+
+        if name and review_text:
+            Review.objects.create(
+                name=name,
+                rating=rating,
+                review=review_text,
+                is_approved=True  # Shows on screen immediately
+            )
+            messages.success(request, 'Thank you for sharing your experience! Your review is now live.')
+            return redirect('reviews')
+
+    all_reviews = Review.objects.all().order_by('-created_at')
     return render(request, 'reviews.html', {'reviews': all_reviews})
-
-
 
 def contact(request):
     return render(request, 'contact.html')
-from django.core.mail import send_mail, get_connection
-from django.conf import settings
-from .models import Appointment
 
 def appointment(request):
 
@@ -127,6 +135,13 @@ Sukhmani Designer
 
         except Exception as e:
             print("CUSTOMER EMAIL ERROR:", repr(e))
+
+        # Automated WhatsApp Alert (Name, Number, Time)
+        try:
+            date_time_str = f"{appointment_date} at {appointment_time}" if appointment_date and appointment_time else (appointment_time or appointment_date or "Flexible")
+            send_whatsapp_alert(name=name, phone=phone, date_time_str=date_time_str)
+        except Exception as e:
+            print("WHATSAPP ALERT ERROR:", repr(e))
 
         success = True
 

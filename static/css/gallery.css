@@ -92,6 +92,7 @@
     border-radius: 6px;
     text-decoration: none;
     transition: .3s ease;
+    display: inline-block;
 }
 
 .btn-book-consultation:hover{

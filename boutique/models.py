@@ -11,13 +11,13 @@ class Appointment(models.Model):
 
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
-    email = models.EmailField()
+    email = models.EmailField(blank=True, default='')
 
     appointment_date = models.DateField()
     appointment_time = models.TimeField()
 
-    service = models.CharField(max_length=50, choices=SERVICE_CHOICES)
-    notes = models.TextField(blank=True)
+    service = models.CharField(max_length=50, choices=SERVICE_CHOICES, default='Consultation', blank=True)
+    notes = models.TextField(blank=True, default='')
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -33,7 +33,7 @@ class Review(models.Model):
     name       = models.CharField(max_length=100)
     rating     = models.PositiveSmallIntegerField()
     review     = models.TextField()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

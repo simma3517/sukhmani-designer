@@ -25,10 +25,10 @@
                 </p>
 
                 <div class="hero-cta-row">
-                    <a href="/appointment/" class="btn btn-primary-hero">
+                    <a href="{% url 'appointment' %}" class="btn btn-primary-hero">
                         Book a Consultation
                     </a>
-                    <a href="/collections/" class="btn btn-ghost-hero">
+                    <a href="{% url 'collections' %}" class="btn btn-ghost-hero">
                         Explore Collections
                     </a>
                 </div>
@@ -37,13 +37,10 @@
         </div>
     </div>
  
- 
     <!-- Floating stats bar -->
     <div class="hero-stats">
         <div class="container">
-            
             <div class="hero-stats-inner">
-                
                 <div class="hero-stat">
                     <span class="hero-stat-num">1500+</span>
                     <span class="hero-stat-label">Happy Clients</span>
@@ -119,14 +116,12 @@
 
             <div class="col-md-4">
                 <div class="collection-card">
-                    {% load static %}
-
-<img src="{% static 'images/f1.jpg' %}" alt="Bridal Wear">
+                    <img src="{% static 'images/f1.jpg' %}" alt="Bridal Wear">
                     <div class="collection-card-body">
                         <p class="collection-label">Heritage Collection</p>
                         <h5 class="collection-title">Bridal Wear</h5>
                         <p class="collection-text">Luxury lehengas and bridal suits crafted for your most cherished day.</p>
-                        <a href="/appointment/" class="btn btn-collection">Book Consultation</a>
+                        <a href="{% url 'appointment' %}" class="btn btn-collection">Book Consultation</a>
                     </div>
                 </div>
             </div>
@@ -138,7 +133,7 @@
                         <p class="collection-label">Everyday Elegance</p>
                         <h5 class="collection-title">Punjabi Suits</h5>
                         <p class="collection-text">Traditional phulkari to contemporary cuts — for every occasion in between.</p>
-                        <a href="/appointment/" class="btn btn-collection">Book Consultation</a>
+                        <a href="{% url 'appointment' %}" class="btn btn-collection">Book Consultation</a>
                     </div>
                 </div>
             </div>
@@ -150,7 +145,7 @@
                         <p class="collection-label">Special Occasions</p>
                         <h5 class="collection-title">Party Wear</h5>
                         <p class="collection-text">Make every entrance memorable — curated statement outfits for functions and soirées.</p>
-                        <a href="/appointment/" class="btn btn-collection">Book Consultation</a>
+                        <a href="{% url 'appointment' %}" class="btn btn-collection">Book Consultation</a>
                     </div>
                 </div>
             </div>
@@ -190,7 +185,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="/gallery/" class="btn btn-cta-ghost" style="border-color: var(--gold); color: var(--brown) !important;">
+            <a href="{% url 'gallery' %}" class="btn btn-cta-ghost" style="border-color: var(--gold); color: var(--brown) !important;">
                 View Full Gallery
             </a>
         </div>
@@ -237,7 +232,7 @@
         </div>
 
         <div class="text-center mt-5">
-            <a href="/reviews/" class="btn btn-collection" style="font-size: 0.73rem;">
+            <a href="{% url 'reviews' %}" class="btn btn-collection" style="font-size: 0.73rem;">
                 Read All Reviews
             </a>
         </div>
@@ -257,8 +252,8 @@
             Book a private consultation and bring your design ideas to life with our atelier.
         </p>
         <div>
-            <a href="/appointment/" class="btn btn-cta-primary">Book Appointment</a>
-            <a href="/contact/" class="btn btn-cta-ghost">Contact Us</a>
+            <a href="{% url 'appointment' %}" class="btn btn-cta-primary">Book Appointment</a>
+            <a href="{% url 'contact' %}" class="btn btn-cta-ghost">Contact Us</a>
         </div>
     </div>
 </section>
