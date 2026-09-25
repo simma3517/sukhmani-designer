@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section style="min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 80px; background: #faf7f2;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <span style="display: inline-block; color: #c9a84c; font-size: 0.85rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px;">Notice</span>
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 6vw, 4.2rem); color: #1a1208; margin-bottom: 16px; font-weight: 300;">Temporarily <em>Unavailable</em></h1>
+        <p style="color: #6b6258; font-size: 1.05rem; line-height: 1.8; margin-bottom: 35px;">
+            We are experiencing a momentary update. Please try refreshing the page or connect with us directly on WhatsApp.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'home' %}" style="display: inline-block; background: #c9a84c; color: #1a1208; font-weight: 600; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; padding: 15px 36px; border-radius: 50px; transition: all 0.3s ease;">
+                Back to Home
+            </a>
+            <a href="https://wa.me/919878776028" target="_blank" style="display: inline-block; background: transparent; border: 1.5px solid #25D366; color: #1a1208; font-weight: 600; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; padding: 15px 32px; border-radius: 50px; transition: all 0.3s ease;">
+                WhatsApp Support
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

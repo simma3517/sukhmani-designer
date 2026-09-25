@@ -25,11 +25,12 @@ import os
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-_oc+-)d1)u*!)w6%!q5@kx$(1z2nxhdy2n=5zf(6*4z9+h!&6r')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1')
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False' if os.environ.get('RENDER') else 'True').lower() in ('true', '1')
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
+    '.onrender.com',
     'sukhmani-designer.onrender.com',
 ] + [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
 

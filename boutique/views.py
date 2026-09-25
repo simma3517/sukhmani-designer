@@ -27,17 +27,31 @@ def reviews(request):
             rating = 5
 
         if name and review_text:
-            Review.objects.create(
-                name=name,
-                rating=rating,
-                review=review_text,
-                is_approved=True  # Shows on screen immediately
-            )
-            messages.success(request, 'Thank you for sharing your experience! Your review is now live.')
-            return redirect('reviews')
+            try:
+                Review.objects.create(
+                    name=name,
+                    rating=rating,
+                    review=review_text,
+                    is_approved=True
+                )
+                messages.success(request, 'Thank you for sharing your experience! Your review is now live.')
+                return redirect('reviews')
+            except Exception as e:
+                print(f"[Reviews] Error saving review: {e}")
 
-    all_reviews = Review.objects.all().order_by('-created_at')
+    try:
+        all_reviews = list(Review.objects.all().order_by('-created_at'))
+    except Exception as e:
+        print(f"[Reviews] Table access notice (falling back to default display): {e}")
+        all_reviews = []
+
     return render(request, 'reviews.html', {'reviews': all_reviews})
+
+def custom_404(request, exception=None):
+    return render(request, '404.html', status=404)
+
+def custom_500(request):
+    return render(request, '500.html', status=500)
 
 def contact(request):
     return render(request, 'contact.html')
@@ -56,15 +70,18 @@ def appointment(request):
         service = request.POST.get('service')
         notes = request.POST.get('notes')
 
-        Appointment.objects.create(
-            name=name,
-            phone=phone,
-            email=email,
-            appointment_date=appointment_date,
-            appointment_time=appointment_time,
-            service=service,
-            notes=notes
-        )
+        try:
+            Appointment.objects.create(
+                name=name,
+                phone=phone,
+                email=email or '',
+                appointment_date=appointment_date,
+                appointment_time=appointment_time,
+                service=service or 'Consultation',
+                notes=notes or ''
+            )
+        except Exception as e:
+            print(f"[Appointment] Error saving to DB: {e}")
 
         print("EMAIL PASSWORD EXISTS:", bool(settings.EMAIL_HOST_PASSWORD))
 
