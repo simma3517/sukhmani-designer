@@ -56,114 +56,130 @@ def custom_500(request):
 def contact(request):
     return render(request, 'contact.html')
 
-def appointment(request):
+import threading
+import urllib.parse
 
-    success = False
-
-    if request.method == 'POST':
-
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        appointment_date = request.POST.get('appointment_date')
-        appointment_time = request.POST.get('appointment_time')
-        service = request.POST.get('service')
-        notes = request.POST.get('notes')
-
-        try:
-            Appointment.objects.create(
-                name=name,
-                phone=phone,
-                email=email or '',
-                appointment_date=appointment_date,
-                appointment_time=appointment_time,
-                service=service or 'Consultation',
-                notes=notes or ''
-            )
-        except Exception as e:
-            print(f"[Appointment] Error saving to DB: {e}")
-
-        print("EMAIL PASSWORD EXISTS:", bool(settings.EMAIL_HOST_PASSWORD))
-
-        try:
-            connection = get_connection()
-            connection.open()
-            print("SMTP CONNECTED SUCCESSFULLY")
-        except Exception as e:
-            print("SMTP CONNECTION ERROR:", repr(e))
-
-        # Email to Admin
+def _send_appointment_notifications(name, phone, email, service, appointment_date, appointment_time, notes):
+    """Background task to send email and WhatsApp alerts without blocking the web response."""
+    # 1. Email to Admin
+    if getattr(settings, 'EMAIL_HOST_PASSWORD', None):
         try:
             send_mail(
-                subject='New Appointment Request',
-                message=f'''
-NEW APPOINTMENT BOOKING
+                subject=f'New Appointment: {name} - Sukhmani Designer',
+                message=f'''NEW APPOINTMENT BOOKING
 
-Customer Details
-----------------
+Customer Details:
 Name: {name}
 Phone: {phone}
-Email: {email}
+Email: {email or 'N/A'}
 
-Appointment Details
--------------------
+Appointment Details:
 Service: {service}
 Date: {appointment_date}
 Time: {appointment_time}
 
-Additional Notes
-----------------
-{notes}
+Additional Notes:
+{notes or 'None'}
 ''',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=['itzsukhmanidesigner@gmail.com'],
-                fail_silently=False,
+                fail_silently=True,
             )
-            print("ADMIN EMAIL SENT")
-
+            print("[Appointment] Admin email sent.")
         except Exception as e:
-            print("ADMIN EMAIL ERROR:", repr(e))
+            print(f"[Appointment] Admin email error: {e}")
 
-        # Email to Customer
-        try:
-            send_mail(
-                subject='Appointment Request Received - Sukhmani Designer',
-                message=f'''
-Dear {name},
+        # 2. Email to Customer (if email provided)
+        if email:
+            try:
+                send_mail(
+                    subject='Appointment Request Received - Sukhmani Designer',
+                    message=f'''Dear {name},
 
 Thank you for choosing Sukhmani Designer.
 
-Your appointment request has been received successfully.
+Your appointment request for {appointment_date} at {appointment_time} ({service}) has been received successfully.
 
-Service: {service}
-Date: {appointment_date}
-Time: {appointment_time}
+Our team will contact you shortly to confirm your consultation.
 
-Our team will contact you shortly.
-
-Regards,
+Warm regards,
 Sukhmani Designer
+Phone: +91 98787 76028 / +91 82840 99286
 ''',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=True,
+                )
+                print("[Appointment] Customer email sent.")
+            except Exception as e:
+                print(f"[Appointment] Customer email error: {e}")
+
+    # 3. Automated WhatsApp Alert
+    try:
+        date_time_str = f"{appointment_date} at {appointment_time}" if appointment_date and appointment_time else (appointment_time or appointment_date or "Flexible")
+        send_whatsapp_alert(name=name, phone=phone, date_time_str=date_time_str)
+    except Exception as e:
+        print(f"[Appointment] WhatsApp alert error: {e}")
+
+
+def appointment(request):
+    success = False
+    whatsapp_url = None
+    booking_details = None
+
+    if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        email = request.POST.get('email', '').strip()
+        appointment_date = request.POST.get('appointment_date', '').strip()
+        appointment_time = request.POST.get('appointment_time', '').strip()
+        service = request.POST.get('service', 'Consultation').strip()
+        notes = request.POST.get('notes', '').strip()
+
+        # 1. Save to Database instantly
+        if name and phone and appointment_date and appointment_time:
+            try:
+                Appointment.objects.create(
+                    name=name,
+                    phone=phone,
+                    email=email,
+                    appointment_date=appointment_date,
+                    appointment_time=appointment_time,
+                    service=service or 'Consultation',
+                    notes=notes
+                )
+            except Exception as e:
+                print(f"[Appointment] DB Error: {e}")
+
+            # 2. Trigger notifications in background thread (never freezes web page)
+            t = threading.Thread(
+                target=_send_appointment_notifications,
+                args=(name, phone, email, service, appointment_date, appointment_time, notes),
+                daemon=True
             )
-            print("CUSTOMER EMAIL SENT")
+            t.start()
 
-        except Exception as e:
-            print("CUSTOMER EMAIL ERROR:", repr(e))
+            # 3. Pre-build instant WhatsApp link for the customer
+            wa_text = f"Hello Sukhmani Designer, I have booked an appointment.\n\n👤 Name: {name}\n📞 Phone: {phone}\n📅 Date: {appointment_date}\n⏰ Time: {appointment_time}\n👗 Service: {service}"
+            if notes:
+                wa_text += f"\n📝 Notes: {notes}"
+            whatsapp_url = f"https://wa.me/919878776028?text={urllib.parse.quote(wa_text)}"
 
-        # Automated WhatsApp Alert (Name, Number, Time)
-        try:
-            date_time_str = f"{appointment_date} at {appointment_time}" if appointment_date and appointment_time else (appointment_time or appointment_date or "Flexible")
-            send_whatsapp_alert(name=name, phone=phone, date_time_str=date_time_str)
-        except Exception as e:
-            print("WHATSAPP ALERT ERROR:", repr(e))
-
-        success = True
+            booking_details = {
+                'name': name,
+                'phone': phone,
+                'date': appointment_date,
+                'time': appointment_time,
+                'service': service,
+            }
+            success = True
 
     return render(
         request,
         'appointment.html',
-        {'success': success}
+        {
+            'success': success,
+            'whatsapp_url': whatsapp_url,
+            'booking_details': booking_details,
+        }
     )

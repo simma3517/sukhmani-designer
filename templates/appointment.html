@@ -8,11 +8,17 @@
 {% block content %}
 
 {% if success %}
-<div class="container mt-4">
-    <div class="alert alert-success mb-4">
-        <strong>✓ Appointment Booked Successfully!</strong>
-        <br>
-        We have received your appointment request and will contact you shortly.
+<div class="container mt-4 mb-2">
+    <div class="alert alert-success p-4" style="border-radius: 12px; background: #eef7ee; border: 1px solid #b7e4b7; color: #1e4620;">
+        <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 8px; font-weight: 600;">✓ Appointment Booked Successfully!</h4>
+        <p style="margin-bottom: 12px; font-size: 1rem;">
+            Thank you <strong>{{ booking_details.name }}</strong>! We have received your consultation request for <strong>{{ booking_details.date }}</strong> at <strong>{{ booking_details.time }}</strong>.
+        </p>
+        {% if whatsapp_url %}
+        <a href="{{ whatsapp_url }}" target="_blank" class="btn" style="background: #25D366; color: white; font-weight: 600; padding: 10px 24px; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-top: 5px;">
+            <i class="fab fa-whatsapp"></i> Open WhatsApp to Confirm Instantly
+        </a>
+        {% endif %}
     </div>
 </div>
 {% endif %}
@@ -71,28 +77,44 @@
 
             <div class="col-lg-8">
 
-                <form method="POST" id="appointmentForm" class="appointment-form">
+                <form method="POST" id="appointmentForm" class="appointment-form" onsubmit="handleAppointmentSubmit(event)">
                     {% csrf_token %}
 
                     <div class="row">
 
                         <div class="col-12 mb-3">
-                            <label class="form-label">Full Name</label>
+                            <label class="form-label">Full Name <span style="color:#d9534f">*</span></label>
                             <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
                         </div>
 
-                        <div class="col-12 mb-3">
-                            <label class="form-label">Mobile Number (WhatsApp)</label>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Mobile Number (WhatsApp) <span style="color:#d9534f">*</span></label>
                             <input type="tel" name="phone" class="form-control" placeholder="e.g. 9878776028" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Preferred Date</label>
+                            <label class="form-label">Email Address (Optional)</label>
+                            <input type="email" name="email" class="form-control" placeholder="name@example.com">
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Service Type</label>
+                            <select name="service" class="form-control">
+                                <option value="Bridal Consultation">Bridal Consultation</option>
+                                <option value="Punjabi Suit Design">Punjabi Suit Design</option>
+                                <option value="Party Wear Styling">Party Wear Styling</option>
+                                <option value="Custom Tailoring">Custom Tailoring</option>
+                                <option value="Measurement Appointment">Measurement Appointment</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Preferred Date <span style="color:#d9534f">*</span></label>
                             <input type="date" name="appointment_date" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Preferred Time</label>
+                            <label class="form-label">Preferred Time <span style="color:#d9534f">*</span></label>
                             <input type="time" name="appointment_time" class="form-control" required>
                         </div>
 
@@ -102,7 +124,7 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-appointment">
+                            <button type="submit" id="submitBtn" class="btn btn-appointment" style="width: 100%; padding: 14px; font-weight: 600; font-size: 1rem;">
                                 Book Appointment
                             </button>
                         </div>
@@ -111,12 +133,21 @@
 
                 </form>
 
-
             </div>
 
         </div>
 
     </div>
 </section>
+
+<script>
+function handleAppointmentSubmit(e) {
+    const btn = document.getElementById('submitBtn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Booking your appointment...';
+    }
+}
+</script>
 
 {% endblock %}
