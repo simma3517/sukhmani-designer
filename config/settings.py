@@ -32,7 +32,16 @@ ALLOWED_HOSTS = [
     'localhost',
     '.onrender.com',
     'sukhmani-designer.onrender.com',
+    'sukhmanidesigner.store',
+    'www.sukhmanidesigner.store',
 ] + [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://sukhmani-designer.onrender.com',
+    'https://sukhmanidesigner.store',
+    'https://www.sukhmanidesigner.store',
+]
 
 
 # Application definition
