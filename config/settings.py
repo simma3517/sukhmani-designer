@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     'sukhmani-designer.onrender.com',
     'sukhmanidesigner.store',
     'www.sukhmanidesigner.store',
+    '.sukhmanidesigner.store',
 ] + [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
 
 CSRF_TRUSTED_ORIGINS = [
