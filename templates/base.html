@@ -92,7 +92,7 @@
         }
 
         .navbar-brand img {
-            height: 84px;
+            height: 82px;
             width: auto;
             object-fit: contain;
             transition: transform 0.35s ease;
@@ -102,27 +102,39 @@
 
         @media (max-width: 991px) {
             :root {
-                --nav-h: 70px;
+                --nav-h: 82px;
             }
 
             body {
-                padding-top: 70px;
+                padding-top: 82px;
             }
 
             .navbar {
-                min-height: 70px;
+                min-height: 82px;
             }
 
             .navbar .container {
-                min-height: 70px;
+                min-height: 82px;
+                padding-left: 1.15rem;
+                padding-right: 1.15rem;
             }
 
             .navbar-brand {
-                min-height: 70px;
+                min-height: 82px;
+                margin-right: 0;
             }
 
             .navbar-brand img {
-                height: 54px;
+                height: 72px;
+                max-width: 220px;
+                object-fit: contain;
+            }
+
+            .navbar-toggler {
+                padding: 0.35rem 0.5rem;
+                border: none !important;
+                outline: none !important;
+                box-shadow: none !important;
             }
 
             .navbar-collapse {
@@ -132,7 +144,7 @@
                 border-top: 1px solid rgba(201,168,76,0.2);
                 border-radius: 0 0 16px 16px;
                 box-shadow: 0 16px 36px rgba(26,18,8,0.14);
-                max-height: calc(100vh - 75px);
+                max-height: calc(100vh - 85px);
                 overflow-y: auto;
             }
 
